@@ -32,8 +32,6 @@ jobs:
 
       - name: Run installer
         run: |
-          wget https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v1/glnxa64/matlab-batch
-          chmod +x matlab-batch
           ./matlab-batch -licenseToken "${{ secrets.MATLAB_LICENSE_TOKEN }}" 'buildResults = compiler.build.standaloneApplication("app.mlapp"); compiler.package.installer(buildResults, "OutputDir", "./installer", "InstallerName", "app-${{ matrix.name }}")'
 
       - uses: actions/upload-artifact@v4
