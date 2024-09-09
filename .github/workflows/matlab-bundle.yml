@@ -14,13 +14,13 @@ jobs:
         include:
           - os: windows-latest
             name: win64
-          # - os: ubuntu-latest
-          #   name: linux
-          # # macos-13 is the last version that is still targetting Intel Macs
-          # - os: macos-13
-          #   name: macos
-          # - os: macos-latest
-          #   name: arm64-macos
+          - os: ubuntu-latest
+            name: linux
+          # macos-13 is the last version that is still targetting Intel Macs
+          - os: macos-13
+            name: macos
+          - os: macos-latest
+            name: arm64-macos
     runs-on: ${{ matrix.os }}
 
     steps:
