@@ -1,0 +1,39 @@
+name: Create standalone installers
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  MLM_LICENSE_TOKEN: ${{ secrets.MATLAB_LICENSE_TOKEN }}
+
+jobs:
+  build:
+    name: Build installer on ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            name: win64
+          - os: ubuntu-latest
+            name: linux
+          - os: macos-13
+            name: macos
+          - os: macos-latest
+            name: arm64-macos
+    runs-on: ${{ matrix.os }}
+  
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: matlab-actions/setup-matlab@v2
+
+      - name: Run installer
+        run: |
+          matlab -batch 'buildResults = compiler.build.standaloneApplication("app.mlapp"); compiler.package.installer(buildResults, "OutputDir", "./installer", "InstallerName", "app-${{ matrix.name }}")'
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          name: installer        
