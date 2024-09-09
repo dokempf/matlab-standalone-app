@@ -12,24 +12,26 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: windows-latest
-            name: win64
+          # - os: windows-latest
+          #   name: win64
           - os: ubuntu-latest
             name: linux
-          - os: macos-13
-            name: macos
-          - os: macos-latest
-            name: arm64-macos
+          # - os: macos-13
+          #   name: macos
+          # - os: macos-latest
+          #   name: arm64-macos
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: matlab-actions/setup-matlab@v2
+      # - uses: matlab-actions/setup-matlab@v2
 
       - name: Run installer
         run: |
-          matlab-batch -licenseToken "${{ secrets.MATLAB_LICENSE_TOKEN }}" 'buildResults = compiler.build.standaloneApplication("app.mlapp"); compiler.package.installer(buildResults, "OutputDir", "./installer", "InstallerName", "app-${{ matrix.name }}")'
+          wget https://ssd.mathworks.com/supportfiles/ci/matlab-batch/v1/glnxa64/matlab-batch
+          chmod +x matlab-batch
+          ./matlab-batch -licenseToken "${{ secrets.MATLAB_LICENSE_TOKEN }}" 'buildResults = compiler.build.standaloneApplication("app.mlapp"); compiler.package.installer(buildResults, "OutputDir", "./installer", "InstallerName", "app-${{ matrix.name }}")'
 
       - uses: actions/upload-artifact@v4
         with:
