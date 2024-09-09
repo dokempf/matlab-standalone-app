@@ -16,6 +16,7 @@ jobs:
             name: win64
           - os: ubuntu-latest
             name: linux
+          # macos-13 is the last version that is still targetting Intel Macs
           - os: macos-13
             name: macos
           - os: macos-latest
@@ -33,6 +34,7 @@ jobs:
             MATLAB_Compiler
 
       - name: Run installer
+        shell: bash
         run: |
           matlab-batch -licenseToken "${{ secrets.MATLAB_LICENSE_TOKEN }}" 'buildResults = compiler.build.standaloneApplication("app.mlapp"); compiler.package.installer(buildResults, "OutputDir", "./installer", "InstallerName", "app-${{ matrix.name }}")'
 
