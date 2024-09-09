@@ -28,13 +28,14 @@ jobs:
 
       - uses: matlab-actions/setup-matlab@v2
         with:
-          # You should add all the products that you need here. The names have to match
+          # TODO: You should add all the products that you need here. The names have to match
           # the ones in this document: https://github.com/mathworks-ref-arch/matlab-dockerfile/blob/main/mpm-input-files/R2024a/mpm_input_r2024a.txt#L67
           products: >
             MATLAB_Compiler
 
       - name: Run installer
         shell: bash
+        # TODO: Replace 'app.mlapp' with the path of your mlapp file
         run: |
           matlab-batch -licenseToken "${{ secrets.MATLAB_LICENSE_TOKEN }}" "buildResults = compiler.build.standaloneApplication('app.mlapp'); compiler.package.installer(buildResults, 'OutputDir', 'installer');"
 
