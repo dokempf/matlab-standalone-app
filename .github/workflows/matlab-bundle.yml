@@ -32,7 +32,7 @@ jobs:
 
       - name: Run installer
         run: |
-          ./matlab-batch -licenseToken "${{ secrets.MATLAB_LICENSE_TOKEN }}" 'buildResults = compiler.build.standaloneApplication("app.mlapp"); compiler.package.installer(buildResults, "OutputDir", "./installer", "InstallerName", "app-${{ matrix.name }}")'
+          matlab-batch -licenseToken "${{ secrets.MATLAB_LICENSE_TOKEN }}" 'buildResults = compiler.build.standaloneApplication("app.mlapp"); compiler.package.installer(buildResults, "OutputDir", "./installer", "InstallerName", "app-${{ matrix.name }}")'
 
       - uses: actions/upload-artifact@v4
         with:
