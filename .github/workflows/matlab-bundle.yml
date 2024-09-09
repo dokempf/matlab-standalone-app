@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # - uses: matlab-actions/setup-matlab@v2
+      - uses: matlab-actions/setup-matlab@v2
 
       - name: Run installer
         run: |
