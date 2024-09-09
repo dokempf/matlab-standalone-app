@@ -6,9 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  MLM_LICENSE_TOKEN: ${{ secrets.MATLAB_LICENSE_TOKEN }}
-
 jobs:
   build:
     name: Build installer on ${{ matrix.os }}
@@ -32,7 +29,7 @@ jobs:
 
       - name: Run installer
         run: |
-          matlab -batch 'buildResults = compiler.build.standaloneApplication("app.mlapp"); compiler.package.installer(buildResults, "OutputDir", "./installer", "InstallerName", "app-${{ matrix.name }}")'
+          matlab-batch -licenseToken  ${{ secrets.MATLAB_LICENSE_TOKEN }} 'buildResults = compiler.build.standaloneApplication("app.mlapp"); compiler.package.installer(buildResults, "OutputDir", "./installer", "InstallerName", "app-${{ matrix.name }}")'
 
       - uses: actions/upload-artifact@v4
         with:
